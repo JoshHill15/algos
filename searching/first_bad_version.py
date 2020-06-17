@@ -22,6 +22,10 @@
 
 
 # TODO LEETCODE
+def isBadVersion(n):
+    if n == 4:
+        return True
+    return False
 
 
 def firstBadVersion(self, n):
