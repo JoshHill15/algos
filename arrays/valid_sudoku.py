@@ -48,37 +48,75 @@
 # # The given board size is always 9x9.
 
 
-def isValid(row, col, board):
-    val = board[row][col]
+def getCandidates(board, row, col):
+    candidates = []
+    l = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
-    for i in range(row+1, len(board)):
-        if board[i][col] == val:
-            return False
+    for char in l:
+        collision = False
+        for i in range(9):
+            if (board[row][i] == char or
+                board[i][col] == char or
+                    board[(row-row % 3) + i // 3][(col-col % 3 + i % 3)] == char):
+                collision = True
+                break
 
-    for i in range(col+1, len(board[0])):
-        if board[row][i] == val:
-            return False
+        if not collision:
+            candidates.append(char)
 
-    return True
+    return candidates
 
 
-class Solution:
-    def isValidSudoku(self, board):
-        for row in range(len(board)):
-            for col in range(len(board[0])):
-                if board[row][col] != ".":
-                    valid = isValid(row, col, board)
-                    print(valid, (row, col))
-                    if not valid:
-                        return False
+def sudokuSolve(board):
+    row = -1
+    col = -1
+    candidates = None
 
+    for r in range(9):
+        for c in range(9):
+            if board[r][c] == ".":
+                new_candidates = getCandidates(board, r, c)
+
+                if not candidates or len(new_candidates) < len(candidates):
+                    candidates = new_candidates
+                    row = r
+                    col = c
+
+    if not candidates:
         return True
 
+    for val in candidates:
+        board[row][col] = val
+        if sudokuSolve(board):
+            return True
 
-s = Solution()
-d = [["5", "3", ".", ".", "7", ".", ".", ".", "."], ["6", ".", ".", "1", "9", "5", ".", ".", "."], [".", "9", "8", ".", ".", ".", ".", "6", "."], ["8", ".", ".", ".", "6", ".", ".", ".", "3"], ["4", ".", ".", "8",
-                                                                                                                                                                                                  ".", "3", ".", ".", "1"], ["7", ".", ".", ".", "2", ".", ".", ".", "6"], [".", "6", ".", ".", ".", ".", "2", "8", "."], [".", ".", ".", "4", "1", "9", ".", ".", "5"], [".", ".", ".", ".", "8", ".", ".", "7", "9"]]
-e = [[".", ".", ".", ".", "5", ".", ".", "1", "."], [".", "4", ".", "3", ".", ".", ".", ".", "."], [".", ".", ".", ".", ".", "3", ".", ".", "1"], ["8", ".", ".", ".", ".", ".", ".", "2", "."], [".", ".", "2", ".",
-                                                                                                                                                                                                  "7", ".", ".", ".", "."], [".", "1", "5", ".", ".", ".", ".", ".", "."], [".", ".", ".", ".", ".", "2", ".", ".", "."], [".", "2", ".", "9", ".", ".", ".", ".", "."], [".", ".", "4", ".", ".", ".", ".", ".", "."]]
-a = s.isValidSudoku(e)
-print(a)
+        board[row][col] == "."
+
+    return False
+
+
+a = [
+    ["5", "3", ".", ".", "7", ".", ".", ".", "."],
+    ["6", ".", ".", "1", "9", "5", ".", ".", "."],
+    [".", "9", "8", ".", ".", ".", ".", "6", "."],
+    ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
+    ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
+    ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
+    [".", "6", ".", ".", ".", ".", "2", "8", "."],
+    [".", ".", ".", "4", "1", "9", ".", ".", "5"],
+    [".", ".", ".", ".", "8", ".", ".", "7", "9"]
+]
+
+b = [
+    ["8", "3", ".", ".", "7", ".", ".", ".", "."],
+    ["6", ".", ".", "1", "9", "5", ".", ".", "."],
+    [".", "9", "8", ".", ".", ".", ".", "6", "."],
+    ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
+    ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
+    ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
+    [".", "6", ".", ".", ".", ".", "2", "8", "."],
+    [".", ".", ".", "4", "1", "9", ".", ".", "5"],
+    [".", ".", ".", ".", "8", ".", ".", "7", "9"]
+]
+
+print(sudokuSolve(b))

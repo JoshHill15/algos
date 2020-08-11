@@ -23,6 +23,7 @@ def merge(nums1, m, nums2, n):
     """
     if len(nums1) == 0 or len(nums2) == 0:
         return
+
     limit = n+m
     a = 0
     i = 0
@@ -34,10 +35,43 @@ def merge(nums1, m, nums2, n):
     nums1.sort()
 
 
+def merge2(nums1, m: int, nums2, n: int) -> None:
+    """
+    Do not return anything, modify nums1 in-place instead.
+    """
+    if not nums1 or not nums2:
+        return
+
+    a = 0
+    b = 0
+    limit = n+m
+    temp = list(nums1)
+
+    for i in range(limit):
+
+        if a < m and b < n and temp[a] <= nums2[b]:
+            nums1[i] = temp[a]
+            a += 1
+
+        elif b < n and nums2[b] < temp[a]:
+            nums1[i] = nums2[b]
+            b += 1
+
+        elif b < n and a >= m:
+            nums1[i] = nums2[b]
+            b += 1
+
+        else:
+            nums1[i] = temp[a]
+            a += 1
+
+
 nums1 = [1, 2, 3, 0, 0, 0]
 m = 3
 nums2 = [2, 5, 6]
 n = 3
+
+
 print(nums1)
-merge(nums1, m, nums2, n)
+merge2(nums1, m, nums2, n)
 print(nums1)
