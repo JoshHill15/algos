@@ -9,7 +9,44 @@
 # Explanation: 342 + 465 = 807.
 
 
-def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+def addTwoNumbers(l1, l2):
+    dummy = cur = ListNode(0)
+    carry = 0
+    while l1 or l2 or carry:
+        if l1:
+            carry += l1.val
+            l1 = l1.next
+        if l2:
+            carry += l2.val
+            l2 = l2.next
+        cur.next = ListNode(carry % 10)
+        cur = cur.next
+        carry //= 10
+
+    return dummy.next
+
+
+a = ListNode(2)
+a.next = ListNode(4)
+a.next.next = ListNode(3)
+
+b = ListNode(5)
+b.next = ListNode(6)
+b.next.next = ListNode(4)
+
+node = addTwoNumbers(a, b)
+while node:
+    print(node.val)
+    node = node.next
+
+
+def addTwoNumbers2(self, l1: ListNode, l2: ListNode) -> ListNode:
     a = ""
     b = ""
     while l1 or l2:
