@@ -1,15 +1,8 @@
 function compareTwoObjects(obj1, obj2) {
   // write your code here
-  const l1 = Object.keys(obj1)
-  const l2 = Object.keys(obj2)
-
-  if (l1.length != l2.length) return false
-
   for (let key in obj1) {
-    if (!obj2[key]) return false
-    if (obj1[key] != obj2[key]) return false
+
   }
-  return true
 }
 
 // Test cases to verify
