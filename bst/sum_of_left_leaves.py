@@ -1,3 +1,7 @@
+from collections import Counter
+import heapq
+
+
 class TreeNode(object):
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -33,4 +37,24 @@ root.right.left = TreeNode(15)
 root.right.right = TreeNode(7)
 
 
-print(Solution().sumOfLeftLeaves(root))
+# print(Solution().sumOfLeftLeaves(root))
+
+
+def output(elements):
+    heap = []
+    element_to_frequency = Counter(elements)
+    elements = []
+
+    for element, frequency in element_to_frequency.items():
+        heapq.heappush(heap, (frequency, element))
+
+    while heap:
+        frequency, element = heapq.heappop(heap)
+        elements.extend([element] * frequency)
+    print(elements)
+    return elements
+
+
+print(output([3, 4, 2, 5, 2, 3, 4, 3, 6]) == [6, 5, 4, 4, 2, 2, 3, 3, 3])
+print(output([7, 7, 7, 7, 2, 2, 3, 3, 1, 1, 9, 6, 6, 6, 6])
+      == [9, 3, 3, 2, 2, 1, 1, 7, 7, 7, 7, 6, 6, 6, 6])

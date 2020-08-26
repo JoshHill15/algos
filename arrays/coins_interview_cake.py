@@ -1,7 +1,7 @@
 # They found out you're a programmer and asked you to solve something they've been wondering for a long time.
 
 # Write a function that, given:
-
+from typing import List
 # an amount of money
 # a list of coin denominations
 # computes the number of ways to make the amount of money with coins of the available denominations.
@@ -14,6 +14,17 @@
 # 2¢, 2¢
 
 
+def coinChange(coins: List[int], amount: int) -> int:
+    dp = [float('inf')] * (amount + 1)
+    dp[0] = 0
+
+    for coin in coins:
+        for x in range(coin, amount + 1):
+            dp[x] = min(dp[x], dp[x - coin] + 1)
+
+    return dp[amount] if dp[amount] != float('inf') else -1
+
+
 def change_possibilities_bottom_up(amount, denominations):
     ways_of_doing_n_cents = [0] * (amount + 1)
     ways_of_doing_n_cents[0] = 1
@@ -22,9 +33,7 @@ def change_possibilities_bottom_up(amount, denominations):
 
         for higher_amount in range(coin, amount + 1):
             higher_amount_remainder = higher_amount - coin
-            ways_of_doing_n_cents[higher_amount] += (
-                ways_of_doing_n_cents[higher_amount_remainder]
-            )
+            ways_of_doing_n_cents[higher_amount] += ways_of_doing_n_cents[higher_amount_remainder]
 
     return ways_of_doing_n_cents[amount]
 
@@ -78,5 +87,7 @@ class Change(object):
         return num_possibilities
 
 
+a = [2]
+b = 3
 # print(Change().change_possibilities_top_down(4, [1, 2, 3]))
-print(change_possibilities_bottom_up(4, [1, 2, 3]))
+print(coinChange(a, b))
