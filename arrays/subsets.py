@@ -19,19 +19,10 @@
 
 
 def subsets(nums):
-    ans = [[]]
-
-    if not nums:
-        return ans[0]
-
-    for i in range(1, len(nums)+1):
-        left = 0
-        right = i
-        while right <= len(nums):
-            sl = nums[left:right]
-            ans.append(sl)
-            right += 1
-            left += 1
+    ans = [""]
+    for num in nums:
+        for i in range(len(ans)):
+            ans.append(ans[i] + str(num))
 
     return ans
 
@@ -41,6 +32,8 @@ def s(nums):
     for num in nums:
         for i in range(len(ans)):
             ans.append(ans[i] + [num])
+
+    return ans
 
 
 print(subsets([1, 2, 3]))
