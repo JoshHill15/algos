@@ -15,17 +15,38 @@
 import re
 
 
-def isPalindrome(s: str) -> bool:
+# def isPalindrome(s: str) -> bool:
 
-    s = re.sub('[^0-9a-zA-Z]+', '', s)
+#     s = re.sub('[^0-9a-zA-Z]+', '', s)
+#     left = 0
+#     right = len(s) - 1
+
+#     while left < right:
+#         val1 = s[left].lower()
+#         val2 = s[right].lower()
+#         if val1 != val2:
+#             return False
+#         left += 1
+#         right -= 1
+
+#     return True
+
+def isPalindrome(s: str) -> bool:
     left = 0
-    right = len(s) - 1
+    right = len(s)-1
 
     while left < right:
-        val1 = s[left].lower()
-        val2 = s[right].lower()
-        if val1 != val2:
+        if s[left].isalpha() == False:
+            left += 1
+            continue
+
+        if s[right].isalpha() == False:
+            right -= 1
+            continue
+
+        if s[left].lower() != s[right].lower():
             return False
+
         left += 1
         right -= 1
 
