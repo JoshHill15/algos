@@ -16,3 +16,9 @@ class Solution:
                     candidates[i:], target - c, curr + [c], ans)
 
         return ans
+
+
+s = Solution()
+arr = [2, 3, 6, 7]
+t = 7
+print(s.combinationSum(arr, t))
